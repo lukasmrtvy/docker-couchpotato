@@ -7,19 +7,19 @@ ENV USER htpc
 ENV GROUP htpc
 
 RUN addgroup -S ${GROUP} && adduser -D -S -u ${UID} ${USER} ${GROUP} && \
-    apk update && apk upgrade && apk add --no-cache git python 
+    apk update && apk upgrade && apk add --no-cache git python
 
 RUN mkdir /opt && \
     cd /opt && \
     git clone https://github.com/CouchPotato/CouchPotatoServer && \
-    VERSION=${git log -n 1 --pretty=format:"%H %cd"}
-    
+    cd CouchPotatoServer && VERSION=`git log -n 1 --pretty=format:"%H %cd"`
+
 
 EXPOSE 5050
 
 WORKDIR /opt
 
-VOLUME /root/.couchpotato/ 
+VOLUME /root/.couchpotato/
 
 LABEL name=couchpotato
 LABEL version=${VERSION}
