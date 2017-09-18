@@ -11,13 +11,19 @@ RUN addgroup -S ${GROUP} && adduser -D -S -u ${UID} ${USER} ${GROUP} && \
 
 RUN mkdir /opt && \
     cd /opt && \
-    git clone https://github.com/CouchPotato/CouchPotatoServer
+    git clone https://github.com/CouchPotato/CouchPotatoServer && \
+    VERSION=${git log -n 1 --pretty=format:"%H %cd"}
+    
 
 EXPOSE 5050
 
 WORKDIR /opt
 
 VOLUME /root/.couchpotato/ 
+
+LABEL name=couchpotato
+LABEL version=${VERSION}
+LABEL url=https://api.github.com/repos/CouchPotato/CouchPotatoServer/commits/master
 
 USER ${USER}
 
