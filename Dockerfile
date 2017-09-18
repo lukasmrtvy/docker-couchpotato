@@ -19,7 +19,7 @@ EXPOSE 5050
 
 WORKDIR /opt
 
-VOLUME /root/.couchpotato/
+VOLUME /${USER}/.couchpotato/
 
 LABEL name=couchpotato
 LABEL version=${VERSION}
