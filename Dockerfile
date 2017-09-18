@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ENV PYTHONIOENCODING="UTF-8"
 
-RUN apk update && apk upgrade && apk add --no-cache git python bash && \
+RUN apk update && apk upgrade && apk add --no-cache git python && \
   rm -rf /var/cache/apk/*
 
 RUN mkdir /opt && \
