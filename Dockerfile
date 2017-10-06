@@ -3,28 +3,29 @@ FROM alpine:latest
 ENV PYTHONIOENCODING="UTF-8"
 
 ENV UID 1000
+ENV GID 1000
 ENV USER htpc
 ENV GROUP htpc
 
-RUN addgroup -S ${GROUP} && adduser -D -S -u ${UID} ${USER} ${GROUP} && \
-    apk update && apk upgrade && apk add --no-cache git python && \
-    mkdir -p /opt && \
+ENV COUCHPOTATO_VERSION 0a97ed5a2312083465939e24cf0a5fd7a2f2ca35
+
+RUN addgroup -S ${GROUP} -g ${GID} && adduser -D -S -u ${UID} ${USER} ${GROUP}  && \
+    apk update && apk upgrade && apk add --no-cache curl git python && \
+    mkdir -p /opt/couchpotato /config/couchpotato && \
     cd /opt && \
-    git clone https://github.com/CouchPotato/CouchPotatoServer && \
-    cd CouchPotatoServer && \
-    VERSION=`git log -n 1 --pretty=format:"%H %cd"`
+    curl -sSL https://github.com/CouchPotato/CouchPotatoServer/archive/${COUCHPOTATO_VERSION}.tar.gz | tar xz -C /opt/couchpotato --strip-components=1 && \
+    chown -R ${USER}:${GROUP} /opt/couchpotato /config/
 
 
 EXPOSE 5050
 
 WORKDIR /opt
 
-VOLUME /${USER}/.couchpotato/
+VOLUME /config/couchpotato/
 
-LABEL name=couchpotato
-LABEL version=${VERSION}
+LABEL version=${COUCHPOTATO_VERSION}
 LABEL url=https://api.github.com/repos/CouchPotato/CouchPotatoServer/commits/master
 
 USER ${USER}
 
-ENTRYPOINT ["python", "CouchPotatoServer/CouchPotato.py"]
+ENTRYPOINT ["python", "couchpotato/CouchPotato.py", "--data_dir=/config/couchpotato/"]
