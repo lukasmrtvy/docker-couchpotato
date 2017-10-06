@@ -1,3 +1,7 @@
 # docker-couchpotato
 
-`sudo docker build --no-cache -t couchpotato . ; sudo docker stop couchpotato && sudo docker rm couchpotato ; sudo docker run -d -p 5050:5050 --name couchpotato --restart always -v couchpotato:/root/.couchpotato/ couchpotato ; sudo docker logs couchpotato`
+## Info:
+Based on Alpine:latest
+
+## Usage:
+`docker rm -f couchpotato; sudo docker run -d --restart always --name couchpotato -p 5050:5050 -v /docker/couchpotato:/config/couchpotato lukasmrtvy/docker-couchpotato`
