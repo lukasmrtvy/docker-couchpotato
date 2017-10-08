@@ -13,7 +13,8 @@ RUN addgroup -S ${GROUP} -g ${GID} && adduser -D -S -u ${UID} ${USER} ${GROUP}  
     apk update && apk upgrade && apk add --no-cache curl git python && \
     mkdir -p /opt/couchpotato /config/couchpotato && \
     curl -sSL https://github.com/CouchPotato/CouchPotatoServer/archive/${COUCHPOTATO_VERSION}.tar.gz | tar xz -C /opt/couchpotato --strip-components=1 && \
-    chown -R ${USER}:${GROUP} /opt/couchpotato /config/
+    chown -R ${USER}:${GROUP} /opt/couchpotato /config/ && \
+    apk del curl
 
 
 EXPOSE 5050
