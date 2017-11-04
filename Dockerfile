@@ -10,11 +10,12 @@ ENV GROUP htpc
 ENV COUCHPOTATO_VERSION 0a97ed5a2312083465939e24cf0a5fd7a2f2ca35
 
 RUN addgroup -S ${GROUP} -g ${GID} && adduser -D -S -u ${UID} ${USER} ${GROUP}  && \
-    apk update && apk upgrade && apk add --no-cache curl git python tzdata && \
+    apk update && apk upgrade && apk add --no-cache curl git python tzdata pip && \
+    pip install --upgrade lxml pyopenssl && \
     mkdir -p /opt/couchpotato /config/couchpotato && \
     curl -sSL https://github.com/CouchPotato/CouchPotatoServer/archive/${COUCHPOTATO_VERSION}.tar.gz | tar xz -C /opt/couchpotato --strip-components=1 && \
     chown -R ${USER}:${GROUP} /opt/couchpotato /config/ && \
-    apk del curl git
+    apk del curl git pip
 
 
 EXPOSE 5050
