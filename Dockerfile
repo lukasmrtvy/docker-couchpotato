@@ -14,8 +14,6 @@ RUN addgroup -S ${GROUP} -g ${GID} && adduser -D -S -u ${UID} ${USER} ${GROUP}  
     mkdir -p /opt/couchpotato /config/couchpotato && \
     curl -sSL https://github.com/CouchPotato/CouchPotatoServer/archive/${COUCHPOTATO_VERSION}.tar.gz | tar xz -C /opt/couchpotato --strip-components=1 && \
     chown -R ${USER}:${GROUP} /opt/couchpotato /config/ && \
-    ln -s  /dev/stdout /config/couchpotato/logs/CouchPotato.log && \
-    ln -s  /dev/stderr /config/couchpotato/logs/error.log && \
     apk del curl git 
 
 
@@ -30,4 +28,4 @@ LABEL url=https://api.github.com/repos/CouchPotato/CouchPotatoServer/commits/mas
 
 USER ${USER}
 
-ENTRYPOINT ["python", "couchpotato/CouchPotato.py", "--data_dir=/config/couchpotato/"]
+ENTRYPOINT ["python", "couchpotato/CouchPotato.py", "--data_dir=/config/couchpotato/", "--console_log"]
