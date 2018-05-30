@@ -24,7 +24,7 @@ WORKDIR /opt
 VOLUME /config/couchpotato/
 
 LABEL version=${COUCHPOTATO_VERSION}
-LABEL url=https://api.github.com/repos/CouchPotato/CouchPotatoServer/commits/master
+LABEL url=https://github.com/CouchPotato/CouchPotatoServer/
 
 USER ${USER}
 
